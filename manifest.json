@@ -1,11 +1,14 @@
 {
   "name": "friction.",
   "description": "Extra layer of friction against social media",
-  "version": "1.0",
+  "version": "1.1",
   "manifest_version": 3,
+  "permissions": [
+    "storage" 
+  ],
   "action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
+    "default_popup": "popup.html",
+    "default_icon": "friction.png"
   },
   "content_scripts": [
     {
@@ -19,7 +22,7 @@
         "*://*.youtube.com/*",
         "*://*.tiktok.com/*"
       ],
-      "js": ["content.js"],
+      "js": ["config.js","content.js"],
       "run_at": "document_start"
     }
   ],
