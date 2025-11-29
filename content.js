@@ -36,6 +36,11 @@
         let timeLeft = cooldownDuration;
     
         const interval = setInterval(() => {
+            if (document.hidden) {
+                enterBtn.innerText = "Focus to continue"; 
+                return; 
+            }
+            
             timeLeft--;
             timerDisplay.innerText = timeLeft;
     
