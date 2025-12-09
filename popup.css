@@ -6,6 +6,14 @@ body {
     background-color: #1a1a1a;
 }
 
+.row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
 h3 { 
     margin-top: 0; 
     margin-bottom: 15px;
