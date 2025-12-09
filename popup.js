@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    chrome.storage.sync.get([Config.STORAGE_KEY], (result) => {
-        const duration = result[Config.STORAGE_KEY] || Config.DEFAULT_DURATION;
+    chrome.storage.sync.get([Config.TIMER_DURATION_KEY, Config.ROOT_ONLY_KEY], (result) => {
+        const duration = result[Config.TIMER_DURATION_KEY] || Config.DEFAULT_DURATION;
         document.getElementById('seconds').value = duration;
     });
     
@@ -28,6 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 isBlocked ? removeSite(domain, sites) : addSite(domain, sites);
             };
         });
+    });
+
+    const rootOnlyCheckbox = document.getElementById('root-only');
+    rootOnlyCheckbox.addEventListener('change', () => {
+        chrome.storage.sync.set({ rootOnly: rootOnlyCheckbox.checked });
+    });
+    chrome.storage.sync.get([Config.ROOT_ONLY_KEY], (result) => {
+        rootOnlyCheckbox.checked = result[Config.ROOT_ONLY_KEY] || Config.DEFAULT_ROOT_ONLY;
     });
 
     function updateButtonUI(isBlocked) {
@@ -72,10 +80,14 @@ document.getElementById('save').addEventListener('click', () => {
     const seconds = document.getElementById('seconds').value;
 
     chrome.storage.sync.set({ [Config.STORAGE_KEY]: seconds }, () => {
-        const status = document.getElementById('status');
-        status.textContent = 'saved.';
-        setTimeout(() => {
-            status.textContent = '';
-        }, 1500);
+        statusMessage();
     });
 });
+
+function statusMessage() {
+    const status = document.getElementById('status');
+    status.textContent = 'saved.';
+    setTimeout(() => {
+        status.textContent = '';
+    }, 1500);
+}

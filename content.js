@@ -1,11 +1,19 @@
 (function() {
-    chrome.storage.sync.get([Config.STORAGE_KEY], (data) => {
-        const cooldownDuration = data[Config.STORAGE_KEY] ? parseInt(data[Config.STORAGE_KEY]) : Config.DEFAULT_DURATION;
+    chrome.storage.sync.get([Config.TIMER_DURATION_KEY, Config.ROOT_ONLY_KEY], (data) => {
+        const cooldownDuration = data[Config.TIMER_DURATION_KEY] ? parseInt(data[Config.TIMER_DURATION_KEY]) : Config.DEFAULT_DURATION;
+        const rootOnly = data[Config.ROOT_ONLY_KEY] !== undefined ? data[Config.ROOT_ONLY_KEY] : Config.DEFAULT_ROOT_ONLY;
         
-        initExtension(cooldownDuration);
+        initExtension(cooldownDuration, rootOnly);
     });
 
-    function initExtension(cooldownDuration) {
+    function initExtension(cooldownDuration, rootOnly) {
+        if (rootOnly) {
+            const isRoot = Config.FEED_PATHS.includes(window.location.pathname);
+            if (!isRoot) {
+                return;
+            }
+        }
+
         const host = document.createElement('div');
         host.id = 'social-pause-host';
         document.documentElement.appendChild(host);
