@@ -46,9 +46,11 @@
         const interval = setInterval(() => {
             if (document.hidden) {
                 enterBtn.innerText = "Focus to continue"; 
+                timerDisplay.innerText = "PAUSED";
                 return; 
             }
-            
+            enterBtn.innerText = "Wait..."; 
+
             timeLeft--;
             timerDisplay.innerText = timeLeft;
     

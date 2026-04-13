@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('save').addEventListener('click', () => {
     const seconds = document.getElementById('seconds').value;
 
-    chrome.storage.sync.set({ [Config.STORAGE_KEY]: seconds }, () => {
+    chrome.storage.sync.set({ [Config.TIMER_DURATION_KEY]: seconds }, () => {
         statusMessage();
     });
 });
